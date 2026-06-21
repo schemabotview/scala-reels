@@ -1,0 +1,23 @@
+Scala has one of the richest type systems on the JVM, and the payoff is that the compiler catches whole classes of mistakes before your program ever runs. This reel covers three things that work together: the one unified hierarchy every type lives in, generics that let one definition serve every type, and the variance and bounds that say how those generic types relate.
+
+Start at the top of the picture. Unlike Java, Scala has no split between primitives and objects that you have to think about. Everything sits in a single hierarchy with one type at the very top called Any. Every value you can ever write, a number, a string, a list, your own classes, all of them are an Any.
+
+Just below Any the world divides in two. On one side is AnyVal, the value types: Int, Boolean, Double, Char, and friends. These are the things the JVM can hold as raw primitives for speed. On the other side is AnyRef, the reference types: String, List, and every class you define yourself. AnyRef is Scala's name for what Java calls Object.
+
+And then, at the very bottom, there is Nothing. Nothing is unusual: it is a subtype of every other type at once. It has no values, you can never make one, but it is what an expression that never returns is typed as, like one that always throws. Because Nothing sits under everything, it slots in anywhere the compiler needs it to. So the whole story top to bottom is: Any above all, value types and reference types in the middle, and Nothing beneath all.
+
+Now the second idea: generics. Suppose you want a container that holds one thing. Writing a separate box for Int, and another for String, and one for every other type forever, is absurd. Instead you write the box once and leave a hole for the type. Look at the Box class. The A in square brackets after the name is a type parameter. It means: I am a Box of some type, and I will let you fill in which type when you use me.
+
+The same trick works on methods. The first method takes a type parameter A and a list of A, and returns an A, the head of the list. It does not care whether the list holds numbers or strings; it works for all of them with one definition.
+
+And here is the lovely part: most of the time you never write the type in. When you say Box of forty-two, the compiler looks at forty-two, sees an Int, and infers that A is Int. Say Box of the string hi, and A is inferred as String. Call first on a list of one, two, three, and A is inferred as Int again. One definition, every type, with the compiler filling in the blank. That is what we mean by parametric polymorphism: code that is uniform across all types because it is written in terms of a parameter.
+
+That raises a sharp question, and it is the third idea. If a Cat is a kind of Animal, is a Box of Cat a kind of Box of Animal? The answer is: only if you say so, and saying so is called variance.
+
+By default a generic type is invariant. A plain Box of A gives you no subtype relationship at all: a Box of Cat is simply not a Box of Animal, even though cats are animals. That is what keeps mutable containers safe.
+
+To opt in, you annotate the type parameter. A plus sign before A, as in Box of plus A, makes it covariant: now a Box of Cat really is a Box of Animal, and the relationship points the same way as the types inside. This is right for things you only read out of, like an immutable list. A minus sign, as in Sink of minus A, makes it contravariant, and the relationship flips: a thing that consumes Animals can stand in wherever a thing that consumes Cats is wanted. That is right for things you only write into.
+
+The last piece is bounds, which constrain what a type parameter is allowed to be. An upper bound, written A subtype-of Animal, means A can be Animal or anything below it, so inside the method you may safely treat the value as an Animal. A lower bound, written B supertype-of Cat, means B must be Cat or something above it.
+
+So that is the type system in one breath. One hierarchy from Any down to Nothing gives everything a place. Generics let a single definition serve every type. And variance and bounds let you state, precisely, how those generic types relate, so the compiler can guard you without ever getting in your way.
