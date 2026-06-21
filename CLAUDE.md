@@ -49,6 +49,6 @@ Feed order matches the teaching order below. Legend: ✅ scene + tts done ·
 | 9  | `scala-error-handling`  | Error Handling                 | ✅    | ✅  | 🔲    |
 | 10 | `scala-concurrency`     | Parallel & Async Programming   | ✅    | ✅  | 🔲    |
 | 11 | `scala-types`           | Type System & Generics         | ✅    | ✅  | 🔲    |
-| 12 | `scala-contextual`      | Implicits / Givens             | 🔲    | 🔲  | 🔲    |
+| 12 | `scala-contextual`      | Implicits / Givens             | ✅    | ✅  | 🔲    |
 
 The OOP arc is a sub-series: `scala-oop` (abstraction + inheritance) → `scala-encapsulation-polymorphism` (the other two pillars) → `scala-objects` (singletons, companions, `apply`/`unapply`).
