@@ -1,0 +1,19 @@
+Scala is a fully object-oriented language. Every value is an object, and every operation is a method call. But Scala's take on objects is cleaner than what you may have seen in Java, and the quickest way to feel that is to model one small hierarchy and watch the pieces click together.
+
+Here is the shape. At the top sits Animal, an abstract class. Below it, Mammal, a concrete class that extends Animal. Below Mammal, Dog, which extends Mammal in turn. And off to the side sits Walker, a trait, which mixes into Dog. So we have a single line of inheritance, Animal to Mammal to Dog, with one trait joining in along the way. That is the whole picture: abstract base, then class, then subclass, plus a trait mixed in.
+
+Now let's write it as real code, because the syntax is where the ideas live.
+
+Start at the top. Abstract class Animal, taking a val name of type String. Marking the class abstract means it is allowed to have unimplemented members, so you cannot create an Animal directly. Inside, def sound returns a String, but notice there is no body. That is an abstract method, a promise that every concrete animal must fill in. Right below it, def describe returns the string name says sound. That one has a body, so it is a concrete method. Already you can see the pattern: an abstract class mixes things it leaves open with things it provides for everyone.
+
+Next, the trait. Trait Walker declares def legs returning an Int, and def gait, which returns the string walks and has a real body. This is the key thing about traits: they are not just interfaces. A trait can declare members that still need filling in, like legs, and it can also carry fully implemented behavior, like gait. That is what makes a trait a reusable mixin. You write the walking behavior once, and any class can pull it in.
+
+Now the classes. Class Mammal, taking a name, extends Animal, passing name up to the parent constructor. Because Animal left sound abstract, Mammal must implement it, so def sound returns its value. The moment Mammal supplies every missing member, it becomes a concrete class you can actually instantiate.
+
+Then class Dog, taking a name, extends Mammal and, crucially, with Walker. This is composition in Scala: you extend exactly one class, but you can mix in as many traits as you like with the keyword with. Dog inherits everything from Mammal and everything from Walker at once. Inside, override def sound returns the string woof. The override keyword is how you redefine a member that already had a definition, and Scala makes you write it explicitly, so an accidental override can't slip past you. Dog also defines legs as four, finally satisfying the one piece Walker left open.
+
+Finally, case class Cat, which extends Animal and defines sound as meow. A case class is the everyday workhorse of Scala modeling. By adding the single word case, you get a pile of things for free: a sensible equals and hashCode based on the fields, a readable toString, a copy method for making modified duplicates, and pattern-matching support. When you are modeling plain data, you reach for a case class first.
+
+Step back and look at the vocabulary you just used. Abstract classes, to leave members open. Traits, to package reusable behavior and mix it in. Extends, to inherit from a single parent. With, to layer traits on top. Override, to redefine intentionally. And case classes, for data with batteries included. Those are the building blocks of object-oriented design in Scala.
+
+And here is the design instinct to take away. Reach for a trait when you want behavior that many unrelated types can share. Reach for an abstract class when you have a base that holds constructor parameters or shared state. And reach for a case class whenever you are modeling data rather than behavior. Get those three choices right, and your hierarchies stay small, your code stays composable, and the type system keeps the whole thing honest.

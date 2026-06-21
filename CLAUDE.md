@@ -41,7 +41,7 @@ Feed order matches the teaching order below. Legend: ✅ scene + tts done ·
 | 1  | `scala-execution-model` | How Scala Runs on the JVM      | ✅    | ✅  | 🔲    |
 | 2  | `scala-bindings`        | Anatomy of a Binding           | ✅    | ✅  | 🔲    |
 | 3  | `scala-control-flow`    | Control Flow                   | ✅    | ✅  | 🔲    |
-| 4  | `scala-oop`             | Object-Oriented Programming    | 🔲    | 🔲  | 🔲    |
+| 4  | `scala-oop`             | Object-Oriented Programming    | ✅    | ✅  | 🔲    |
 | 5  | `scala-functional`      | Functional Programming         | 🔲    | 🔲  | 🔲    |
 | 6  | `scala-collections`     | Collections Library            | 🔲    | 🔲  | 🔲    |
 | 7  | `scala-error-handling`  | Error Handling                 | 🔲    | 🔲  | 🔲    |
