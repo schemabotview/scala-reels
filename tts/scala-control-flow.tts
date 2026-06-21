@@ -1,0 +1,23 @@
+In most languages, control flow is about statements. Do this, then do that. In Scala, control flow is about expressions. Almost every construct you reach for returns a value, and that one idea quietly changes how you write code. Let's look at the three you will use every single day: if-else, pattern matching, and for-comprehensions.
+
+Start with if-else. In Scala, an if-else is an expression, which means it evaluates to a value you can assign. Write: val s equals, if n is greater than zero then the string pos, else the string neg. There is no separate ternary operator in Scala, because you do not need one. The ordinary if already hands you back a value.
+
+You can chain conditions the same way. Val grade equals, if n is at least ninety then A, else if n is at least eighty then B, else C. The whole chain is one expression, and its value is whichever branch matched.
+
+And when you write an if with no else, like, if debug then log the message, there is nothing to return on the false path, so the result type is Unit. That is Scala's way of telling you this if is being used for its side effect, not for its value.
+
+Next, pattern matching, the real workhorse of Scala control flow. You write val out equals x match, and then a series of case branches. Each case tries the value against a shape on the left, and produces a result on the right.
+
+The simplest case is a literal: case zero produces the string zero. Add a guard with the keyword if: case n, when n is greater than nine, produces big. That branch only fires when the condition also holds. You can destructure a tuple: case a comma b produces a plus b. You can match a constructor and pull out what is inside: case Some of v produces v. That is the unapply mechanism at work. You can match on type: case s of type String produces s dot length. You can take apart a sequence: case head cons tail, which splits a list into its first element and everything after it. You can bind the whole matched value to a name with the at symbol: case w, bound as a Warn, produces keep of w. And finally the wildcard, written as a single underscore, matches anything left over. It is your catch-all. The compiler reads these top to bottom and picks the first one that fits.
+
+Last, loops and comprehensions. Scala has while, and it behaves the way you expect: while i is less than n, do i plus-equals one. But notice something. While is a statement. It returns Unit. It exists purely for side effects.
+
+The same is true of a plain for used for iteration: for i drawn from one to three, do print i. That runs for its effect and yields nothing back.
+
+The interesting form is for-yield. Write val squares equals, for x drawn from one to twenty, then if x modulo two equals zero, yield x times x. This is not an imperative loop at all. The generator draws values one at a time, the if acts as a guard that filters them, and yield collects each surviving result into a new collection. You get back a list of the squares of the even numbers.
+
+And you can have more than one generator. For a drawn from xs, b drawn from ys, yield the pair a comma b. Under the hood, Scala desugars this into nested flatMap and map calls. The for-comprehension is just friendly syntax over methods every collection already has.
+
+Now here is the thread that ties all three together. If-else, match, and for-yield are all expressions. Each one returns a value, and the compiler type-checks that value before your program ever runs. Because a match is an expression over your data, when you match on a sealed type the compiler can verify you have covered every possible case, and it warns you the moment you miss one.
+
+So control flow in Scala is not just about choosing a path through your program. It is about producing a value, safely, with the type system watching your back the entire way.
