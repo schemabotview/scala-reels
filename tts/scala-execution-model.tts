@@ -1,0 +1,35 @@
+How does Scala actually run? Scala is a language that compiles down to the Java Virtual Machine, so to really understand it you have to follow your program all the way from a text file to the processor. Let's trace that whole journey, one step at a time.
+
+It starts with your source. You write plain text in a file ending in dot scala. This is just human-readable code. The machine can't run it directly.
+
+So you hand it to the compiler, scalac. The compiler reads your Scala, checks the types, and translates everything into bytecode.
+
+The result is a dot class file. This bytecode is the same instruction set that Java produces. From here on, the JVM doesn't know or care that you wrote Scala. It just sees standard bytecode, which is why Scala can sit right next to Java libraries.
+
+Now that bytecode has to get into the running machine. That's the job of the first big subsystem, the Class Loader.
+
+The class loader works in three phases. The first is Loading. There's a chain of loaders that cooperate. The Bootstrap loader brings in the core platform classes. The Extension loader handles standard extension libraries. And the Application loader pulls in your own classes and your dependencies. Each one asks its parent first, so the most trusted classes always win.
+
+Once a class is found, it moves to Linking. Linking has its own three steps. Verify checks that the bytecode is well-formed and safe, so a bad or malicious class can't corrupt the machine. Prepare allocates memory for the static fields and sets them to their default values. And Resolve turns symbolic references, the names of other classes and methods, into direct references.
+
+The last phase is Initialization. This is where your static initializers actually run, and in Scala, where the body of an object first executes. After this, the class is live and ready to use.
+
+With classes loaded, the program needs somewhere to keep its data while it runs. That's the Runtime Data Areas, the memory of the JVM.
+
+Some of this memory is shared across every thread. The Method Area holds the class data itself, the bytecode and metadata for each loaded class. The Heap holds your objects, everything you create at runtime. Both of these are shared, which is exactly why threads can see each other's objects.
+
+The rest is private to each thread. Every thread gets its own JVM Stack, made of frames, one frame per method call, holding local variables and the work in progress. Each thread also has a Program Counter register, which simply tracks the next instruction for that thread. And each thread has a Native Method Stack for when it calls down into native code.
+
+So now the data has a home. Who actually runs the instructions? That's the Execution Engine.
+
+The engine has a few parts working together. The Interpreter is the simple one. It reads the bytecode and executes it one instruction at a time, immediately. This gets your program started fast, with no warm-up.
+
+But interpreting is slow for code that runs over and over. So the engine watches for hot paths, and hands them to the Just-In-Time compiler. The JIT has its own little pipeline. It generates an intermediate representation, then an optimizer reshapes it, guided by a profiler that has been measuring which paths are actually hot and which branches usually win. Finally it generates target code, real native machine instructions for this exact processor. That compiled code runs far faster than interpreting ever could.
+
+Working alongside all of this is the Garbage Collector. Remember the heap, full of objects? The collector quietly finds objects nothing references anymore and reclaims that memory, so you never have to free it by hand.
+
+Sometimes your program needs to step outside the JVM entirely, to talk to the operating system or a C library. The Java Native Interface, JNI, is the bridge. It lets the engine call into Native Libraries, code that isn't bytecode at all.
+
+And underneath everything, the destination, is the CPU. The processor. Every path we've traced, the interpreter's instructions and the JIT's compiled native code, ultimately becomes operations the CPU executes.
+
+So that's the full picture. Your dot scala becomes bytecode, the class loader brings it in, the runtime areas hold its data, the execution engine runs it through the interpreter and the JIT, the collector cleans up behind it, and it all lands on the CPU. That is how Scala runs.
