@@ -42,9 +42,13 @@ Feed order matches the teaching order below. Legend: ✅ scene + tts done ·
 | 2  | `scala-bindings`        | Anatomy of a Binding           | ✅    | ✅  | 🔲    |
 | 3  | `scala-control-flow`    | Control Flow                   | ✅    | ✅  | 🔲    |
 | 4  | `scala-oop`             | Object-Oriented Programming    | ✅    | ✅  | 🔲    |
-| 5  | `scala-functional`      | Functional Programming         | 🔲    | 🔲  | 🔲    |
-| 6  | `scala-collections`     | Collections Library            | 🔲    | 🔲  | 🔲    |
-| 7  | `scala-error-handling`  | Error Handling                 | 🔲    | 🔲  | 🔲    |
-| 8  | `scala-concurrency`     | Parallel & Async Programming   | 🔲    | 🔲  | 🔲    |
-| 9  | `scala-types`           | Type System & Generics         | 🔲    | 🔲  | 🔲    |
-| 10 | `scala-contextual`      | Implicits / Givens             | 🔲    | 🔲  | 🔲    |
+| 5  | `scala-encapsulation-polymorphism` | Encapsulation & Polymorphism | ✅ | ✅ | 🔲 |
+| 6  | `scala-objects`         | Objects & Companions           | 🔲    | 🔲  | 🔲    |
+| 7  | `scala-functional`      | Functional Programming         | 🔲    | 🔲  | 🔲    |
+| 8  | `scala-collections`     | Collections Library            | 🔲    | 🔲  | 🔲    |
+| 9  | `scala-error-handling`  | Error Handling                 | 🔲    | 🔲  | 🔲    |
+| 10 | `scala-concurrency`     | Parallel & Async Programming   | 🔲    | 🔲  | 🔲    |
+| 11 | `scala-types`           | Type System & Generics         | 🔲    | 🔲  | 🔲    |
+| 12 | `scala-contextual`      | Implicits / Givens             | 🔲    | 🔲  | 🔲    |
+
+The OOP arc is a sub-series: `scala-oop` (abstraction + inheritance) → `scala-encapsulation-polymorphism` (the other two pillars) → `scala-objects` (singletons, companions, `apply`/`unapply`).
