@@ -47,7 +47,7 @@ Feed order matches the teaching order below. Legend: ✅ scene + tts done ·
 | 7  | `scala-functional`      | Functional Programming         | ✅    | ✅  | 🔲    |
 | 8  | `scala-collections`     | Collections Library            | ✅    | ✅  | 🔲    |
 | 9  | `scala-error-handling`  | Error Handling                 | ✅    | ✅  | 🔲    |
-| 10 | `scala-concurrency`     | Parallel & Async Programming   | 🔲    | 🔲  | 🔲    |
+| 10 | `scala-concurrency`     | Parallel & Async Programming   | ✅    | ✅  | 🔲    |
 | 11 | `scala-types`           | Type System & Generics         | 🔲    | 🔲  | 🔲    |
 | 12 | `scala-contextual`      | Implicits / Givens             | 🔲    | 🔲  | 🔲    |
 
